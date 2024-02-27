@@ -6,7 +6,7 @@ import {
 import { Device, getDevices } from "@/api/api.ts";
 import { DevicesTable } from "./Views/DevicesTable.tsx";
 import { DevicesGrid } from "./Views/DevicesGrid.tsx";
-import {Box} from "@mantine/core";
+import { Box } from "@mantine/core";
 
 export function DevicesPage() {
   const [viewType, setViewType] = useState<DevicesViewType>("grid");
@@ -41,4 +41,8 @@ export function DevicesView({ viewType, devices }: DevicesViewProps) {
     case "table":
       return <DevicesTable devices={devices} />;
   }
+}
+
+export function Filter() {
+  return <input type="search" placeholder="Filter" />;
 }
