@@ -8,16 +8,19 @@ import {
   Text,
 } from "@mantine/core";
 import { DevicesPage } from "@/App/Devices/DevicesPage.tsx";
-import LogoIcon from "@/App/Logo.svg";
+import LogoIcon from "@/Assets/Logo.svg";
 
 export function App() {
   return (
     <MantineProvider>
-      <AppShell header={{ height: 60 }} padding="md">
+      <AppShell padding="md">
         <AppShell.Header bg={"#f6f6f8"}>
-          <Group h="100%" px="md">
+          {/* extract header to component (can be in this same file)*/}
+          <Group>
             <Image src={LogoIcon} />
-            <Text size="xl" c={"#838691"}>Devices</Text>
+            <Text size="xl" c={"#838691"}>
+              Devices
+            </Text>
             <Text
               style={{ marginLeft: "auto" }}
               c={lighten("#000000", 0.35)}
@@ -28,7 +31,7 @@ export function App() {
           </Group>
         </AppShell.Header>
 
-        <AppShell.Main>
+        <AppShell.Main mt={60}>
           <DevicesPage />
         </AppShell.Main>
       </AppShell>

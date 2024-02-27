@@ -9,7 +9,9 @@ interface Props {
 export function DevicesGrid({ devices }: Props) {
   return (
     <Box>
-        <Text c={"#bdbdbd"} size="xs" >{devices.length} devices</Text>
+      <Text c={"#bdbdbd"} size="xs">
+        {devices.length} devices
+      </Text>
       <Grid>
         {devices.map((device) => (
           <DeviceCard key={device.id} device={device} />
@@ -25,8 +27,8 @@ interface CardProps {
 
 function DeviceCard({ device }: CardProps) {
   return (
-    <Grid.Col span={{ base: 8, md: 4, lg: 2 }}>
-      <Card padding="lg" mt={15} w={250} radius="md" withBorder>
+    <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 2 }}>
+      <Card padding="lg" mt={15} radius="md" withBorder>
         <Card.Section ta="center" bg={"#f6f6f8"}>
           <DeviceImage device={device} size="md" />
         </Card.Section>

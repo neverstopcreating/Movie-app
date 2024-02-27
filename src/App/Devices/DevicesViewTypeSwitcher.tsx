@@ -1,9 +1,8 @@
-import { FC } from "react";
 import { ActionIcon, Box, Image } from "@mantine/core";
-import GridActiveIcon from "@/App/GridActive.svg";
-import GridDefaultIcon from "@/App/GridDefault.svg";
-import ListActiveIcon from "@/App/ListActive.svg";
-import ListDefaultIcon from "@/App/ListDefault.svg";
+import GridActiveIcon from "@/Assets/GridActive.svg";
+import GridDefaultIcon from "@/Assets/GridDefault.svg";
+import ListActiveIcon from "@/Assets/ListActive.svg";
+import ListDefaultIcon from "@/Assets/ListDefault.svg";
 
 export type DevicesViewType = "grid" | "table";
 
@@ -12,34 +11,31 @@ export interface Props {
   onViewChange: (viewType: DevicesViewType) => void;
 }
 
-export const DevicesViewTypeSwitcher: FC<Props> = ({
-  viewType,
-  onViewChange,
-}) => (
-  <Box>
-    {viewType === "table" ? (
-      <ActionIcon variant="subtle">
-        <Image src={ListActiveIcon}></Image>
-      </ActionIcon>
-    ) : (
-      <ActionIcon variant="subtle">
+export function DevicesViewTypeSwitcher({ viewType, onViewChange }: Props) {
+  return (
+    <Box>
+      <ActionIcon
+        variant="subtle"
+        onClick={() => onViewChange("table")}
+        size="md"
+      >
         <Image
-          src={ListDefaultIcon}
-          onClick={() => onViewChange("table")}
-        ></Image>
+          src={viewType === "table" ? ListActiveIcon : ListDefaultIcon}
+          width="100%"
+          height="100%"
+        />
       </ActionIcon>
-    )}
-    {viewType === "grid" ? (
-      <ActionIcon variant="subtle">
-        <Image src={GridActiveIcon}></Image>
-      </ActionIcon>
-    ) : (
-      <ActionIcon variant="subtle">
+      <ActionIcon
+        variant="subtle"
+        onClick={() => onViewChange("grid")}
+        size="md"
+      >
         <Image
-          src={GridDefaultIcon}
-          onClick={() => onViewChange("grid")}
-        ></Image>
+          src={viewType === "grid" ? GridActiveIcon : GridDefaultIcon}
+          width="100%"
+          height="100%"
+        />
       </ActionIcon>
-    )}
-  </Box>
-);
+    </Box>
+  );
+}
