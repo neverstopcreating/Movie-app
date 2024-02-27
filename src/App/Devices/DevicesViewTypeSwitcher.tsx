@@ -1,6 +1,9 @@
 import { FC } from "react";
-import { ActionIcon } from "@mantine/core";
-import { IconLayoutGrid, IconLayoutRows } from "@tabler/icons-react";
+import { ActionIcon, Box, Image } from "@mantine/core";
+import GridActiveIcon from "@/App/GridActive.svg";
+import GridDefaultIcon from "@/App/GridDefault.svg";
+import ListActiveIcon from "@/App/ListActive.svg";
+import ListDefaultIcon from "@/App/ListDefault.svg";
 
 export type DevicesViewType = "grid" | "table";
 
@@ -13,18 +16,19 @@ export const DevicesViewTypeSwitcher: FC<Props> = ({
   viewType,
   onViewChange,
 }) => (
-  <div>
-    <ActionIcon
-      variant={viewType === "grid" ? "filled" : "outline"}
-      onClick={() => onViewChange("grid")}
-    >
-      <IconLayoutGrid style={{ width: "70%", height: "70%" }} stroke={1.5} />
+  <Box>
+    <ActionIcon>
+      <Image src={GridDefaultIcon}></Image>
     </ActionIcon>
-    <ActionIcon
-      variant={viewType === "table" ? "filled" : "outline"}
-      onClick={() => onViewChange("table")}
-    >
-      <IconLayoutRows style={{ width: "70%", height: "70%" }} stroke={1.5} />
+    <ActionIcon onClick={() => onViewChange("grid")}>
+      <Image src={GridActiveIcon}></Image>
     </ActionIcon>
-  </div>
+
+    <ActionIcon>
+      <Image src={ListDefaultIcon}></Image>
+    </ActionIcon>
+    <ActionIcon onClick={() => onViewChange("table")}>
+      <Image src={ListActiveIcon}></Image>
+    </ActionIcon>
+  </Box>
 );
