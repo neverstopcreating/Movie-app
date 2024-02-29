@@ -1,5 +1,10 @@
 # Homework Ubiquiti
 
--no zebra in table
--filter fucked up in all the ways
--search doeasnt revert device list after deleting input
+Big ticket items:
+- Consider using react router loaders for fetching data
+- Or consider swr/react-query/tanstack query for fetching data
+- Or consider external global state like mobx/redux
+- Error handling
+- Filter with debounce
+- Virtualize device list
+- Add tests

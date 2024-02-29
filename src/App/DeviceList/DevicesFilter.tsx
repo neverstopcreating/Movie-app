@@ -1,13 +1,7 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Drawer,
-  lighten,
-  ScrollArea,
-} from "@mantine/core";
+import { Box, Button, Checkbox, Drawer, ScrollArea } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { Device } from "@/api/api.ts";
+import { lighterGrayColor } from "@/util/colors.ts";
 
 interface Props {
   devices: Device[];
@@ -36,7 +30,7 @@ export function DevicesFilter({
         onClick={() => setOpened(true)}
         variant="subtle"
         size="xs"
-        c={lighten("#000000", 0.55)}
+        c={lighterGrayColor}
       >
         Filter
       </Button>
@@ -56,7 +50,7 @@ export function DevicesFilter({
           onChange={onSelectedProductLinesChange}
         >
           {productLines.map((productLine) => (
-            <Checkbox value={productLine} label={productLine} mt={15} />
+            <Checkbox key={productLine} value={productLine} label={productLine} mt={15} />
           ))}
         </Checkbox.Group>
       </Drawer>

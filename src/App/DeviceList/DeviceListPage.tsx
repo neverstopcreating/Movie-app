@@ -1,38 +1,29 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   DevicesViewType,
   DevicesViewTypeSwitcher,
 } from "./DevicesViewTypeSwitcher.tsx";
-import { Device, getDevices } from "@/api/api.ts";
+import { Device, useDevices } from "@/api/api.ts";
 import { DevicesTable } from "./Views/DevicesTable.tsx";
 import { DevicesGrid } from "./Views/DevicesGrid.tsx";
 import { Box, Divider } from "@mantine/core";
-import { DevicesFilter } from "@/App/Devices/DevicesFilter.tsx";
-import { DevicesSearch } from "@/App/Devices/DevicesSearch.tsx";
+import { DevicesFilter } from "@/App/DeviceList/DevicesFilter.tsx";
+import { DevicesSearch } from "@/App/DeviceList/DevicesSearch.tsx";
 
-export function DevicesPage() {
+export function DeviceListPage() {
+  const devices = useDevices();
   const [viewType, setViewType] = useState<DevicesViewType>("grid");
-  const [devices, setDevices] = useState<Device[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProductLines, setSelectedProductLines] = useState<string[]>(
     [],
   );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const devices = await getDevices();
-      setDevices(devices);
-    };
-
-    fetchData();
-  }, []);
 
   const filteredDevices = useMemo(() => {
     let filteredDevices = devices;
 
     if (selectedProductLines.length > 0) {
       filteredDevices = filteredDevices.filter((device) =>
-          selectedProductLines.includes(device.line.name),
+        selectedProductLines.includes(device.line.name),
       );
     }
 
@@ -48,7 +39,7 @@ export function DevicesPage() {
   return (
     <Box>
       <Box display={"flex"}>
-        <DevicesSearch onSearch={setSearchTerm} />
+        <DevicesSearch onSearch={setSearchTerm} search={searchTerm}/>
         <DevicesViewTypeSwitcher
           viewType={viewType}
           onViewChange={setViewType}

@@ -1,7 +1,8 @@
 import { Device } from "@/api/api.ts";
-import { DeviceImage } from "@/App/Devices/DeviceImage.tsx";
-import { Box, Table } from "@mantine/core";
+import { DeviceImage } from "@/App/DeviceList/DeviceImage.tsx";
+import { Box, lighten, Table } from "@mantine/core";
 import { grayColor } from "@/util/colors.ts";
+import { Link } from "react-router-dom";
 
 interface Props {
   devices: Device[];
@@ -48,7 +49,14 @@ function DeviceRow({ device }: RowProps) {
       <Table.Td w={250} c={grayColor}>
         {device.line.name}
       </Table.Td>
-      <Table.Td c={grayColor}>{device.product.name}</Table.Td>
+      <Table.Td c={grayColor}>
+        <Link
+          to={`/device/${device.id}`}
+          style={{ color: lighten("#000000", 0.35), textDecoration: "none" }}
+        >
+          {device.product.name}
+        </Link>
+      </Table.Td>
     </Table.Tr>
   );
 }

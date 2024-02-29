@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export interface DevicesData {
   devices: Device[];
   version: string;
@@ -31,4 +33,19 @@ export async function getDevices(): Promise<Device[]> {
   );
   const data: DevicesData = await response.json();
   return data.devices;
+}
+
+export function useDevices(): Device[] {
+  const [devices, setDevices] = useState<Device[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const devices = await getDevices();
+      setDevices(devices);
+    };
+
+    fetchData();
+  }, []);
+
+  return devices;
 }

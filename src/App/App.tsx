@@ -1,14 +1,8 @@
 import "@mantine/core/styles.css";
-import {
-  AppShell,
-  Group,
-  Image,
-  lighten,
-  MantineProvider,
-  Text,
-} from "@mantine/core";
-import { DevicesPage } from "@/App/Devices/DevicesPage.tsx";
+import { AppShell, Group, Image, MantineProvider, Text } from "@mantine/core";
 import LogoIcon from "@/Assets/Logo.svg";
+import { AppRoutes } from "@/App/AppRoutes.tsx";
+import { grayColor } from "@/util/colors.ts";
 
 export function App() {
   return (
@@ -21,18 +15,14 @@ export function App() {
             <Text size="xl" c={"#838691"}>
               Devices
             </Text>
-            <Text
-              style={{ marginLeft: "auto" }}
-              c={lighten("#000000", 0.35)}
-              size="sm"
-            >
+            <Text style={{ marginLeft: "auto" }} c={grayColor} size="sm">
               Karolina Uskure
             </Text>
           </Group>
         </AppShell.Header>
 
         <AppShell.Main mt={60}>
-          <DevicesPage />
+          <AppRoutes />
         </AppShell.Main>
       </AppShell>
     </MantineProvider>
