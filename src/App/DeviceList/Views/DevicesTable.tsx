@@ -14,16 +14,19 @@ export function DevicesTable({ devices }: Props) {
       <Table>
         <Table.Thead>
           <Table.Tr>
-            {/*  Reconsider fixed width in favor if max-width or min-width */}
-            {/* extract color */}
-            <Table.Th w={140} c={"#bdbdbd"} fw={400}>
+            <Table.Th miw={140} c={"#bdbdbd"} fw={400}>
               {devices.length} devices
             </Table.Th>
-            {/*  set text uppercase via style */}
-            <Table.Th w={250} c={grayColor}>
-              PRODUCT LINE
+            <Table.Th
+              w={250}
+              c={grayColor}
+              style={{ textTransform: "uppercase" }}
+            >
+              product line
             </Table.Th>
-            <Table.Th c={grayColor}>NAME</Table.Th>
+            <Table.Th c={grayColor} style={{ textTransform: "uppercase" }}>
+              name
+            </Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>

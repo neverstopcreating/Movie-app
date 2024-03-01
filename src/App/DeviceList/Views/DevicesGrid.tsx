@@ -2,7 +2,7 @@ import { Device } from "@/api/api.ts";
 import { DeviceImage } from "@/App/DeviceList/DeviceImage.tsx";
 import { Box, Card, Grid, lighten, Text } from "@mantine/core";
 import { Link } from "react-router-dom";
-import {lighterGrayColor} from "@/util/colors.ts";
+import { lighterGrayColor } from "@/util/colors.ts";
 
 interface Props {
   devices: Device[];
@@ -36,7 +36,7 @@ function DeviceCard({ device }: CardProps) {
         </Card.Section>
         <Link
           to={`/device/${device.id}`}
-          style={{ color: lighten("#000000", 0.35), textDecoration:"none"}}
+          style={{ color: lighten("#000000", 0.35), textDecoration: "none" }}
         >
           {device.product.name}
         </Link>

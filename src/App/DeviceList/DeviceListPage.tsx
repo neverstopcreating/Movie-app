@@ -6,7 +6,7 @@ import {
 import { Device, useDevices } from "@/api/api.ts";
 import { DevicesTable } from "./Views/DevicesTable.tsx";
 import { DevicesGrid } from "./Views/DevicesGrid.tsx";
-import {Box, Divider, Group} from "@mantine/core";
+import { Box, Divider, Group } from "@mantine/core";
 import { DevicesFilter } from "@/App/DeviceList/DevicesFilter.tsx";
 import { DevicesSearch } from "@/App/DeviceList/DevicesSearch.tsx";
 
@@ -38,23 +38,21 @@ export function DeviceListPage() {
 
   return (
     <Box>
-      <Box display={"flex"} style={{justifyContent:"space-between"}}>
-        <DevicesSearch onSearch={setSearchTerm} search={searchTerm}/>
+      <Box display={"flex"} style={{ justifyContent: "space-between" }}>
+        <DevicesSearch onSearch={setSearchTerm} search={searchTerm} />
         <Group>
           <DevicesViewTypeSwitcher
             viewType={viewType}
             onViewChange={setViewType}
-        />
+          />
           <DevicesFilter
-              selectedProductLines={selectedProductLines}
-              onSelectedProductLinesChange={setSelectedProductLines}
-              devices={devices}
+            selectedProductLines={selectedProductLines}
+            onSelectedProductLinesChange={setSelectedProductLines}
+            devices={devices}
           />
         </Group>
-
       </Box>
       <Divider my="md" />
-
       <DevicesView viewType={viewType} devices={filteredDevices} />
     </Box>
   );
