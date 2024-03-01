@@ -14,27 +14,11 @@ export interface Props {
 export function DevicesViewTypeSwitcher({ viewType, onViewChange }: Props) {
   return (
     <Box>
-      <ActionIcon
-        variant="subtle"
-        onClick={() => onViewChange("table")}
-        size="md"
-      >
-        <Image
-          src={viewType === "table" ? ListActiveIcon : ListDefaultIcon}
-          width="100%"
-          height="100%"
-        />
+      <ActionIcon variant="subtle" onClick={() => onViewChange("table")}>
+        <Image src={viewType === "table" ? ListActiveIcon : ListDefaultIcon} />
       </ActionIcon>
-      <ActionIcon
-        variant="subtle"
-        onClick={() => onViewChange("grid")}
-        size="md"
-      >
-        <Image
-          src={viewType === "grid" ? GridActiveIcon : GridDefaultIcon}
-          width="100%"
-          height="100%"
-        />
+      <ActionIcon variant="subtle" onClick={() => onViewChange("grid")}>
+        <Image src={viewType === "grid" ? GridActiveIcon : GridDefaultIcon} />
       </ActionIcon>
     </Box>
   );

@@ -1,7 +1,17 @@
-import { Box, Button, Checkbox, Drawer, ScrollArea } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Checkbox,
+  Divider,
+  Group,
+  Image,
+  Popover,
+  Text,
+} from "@mantine/core";
 import { useMemo, useState } from "react";
 import { Device } from "@/api/api.ts";
-import { lighterGrayColor } from "@/util/colors.ts";
+import { grayColor, lighterGrayColor } from "@/util/colors.ts";
+import CloseIcon from "@/Assets/Close-icon.svg";
 
 interface Props {
   devices: Device[];
@@ -25,35 +35,42 @@ export function DevicesFilter({
   }, [devices]);
 
   return (
-    <Box>
-      <Button
-        onClick={() => setOpened(true)}
-        variant="subtle"
-        size="xs"
-        c={lighterGrayColor}
-      >
-        Filter
-      </Button>
-      {/* TODO: popover */}
-      <Drawer
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Filter"
-        padding="xl"
-        size="sm"
-        position="right"
-        scrollAreaComponent={ScrollArea.Autosize}
-      >
+    <Popover opened={opened} onChange={setOpened} width={250} offset={-40}>
+      <Popover.Target>
+        <Button
+          variant="subtle"
+          size="sm"
+          c={lighterGrayColor}
+          onClick={() => setOpened(true)}
+          fw={"normal"}
+        >
+          Filter
+        </Button>
+      </Popover.Target>
+      <Divider my="md" />
+      <Popover.Dropdown>
+        <Group c={grayColor} style={{ justifyContent: "space-between" }}>
+          <Text>Filter</Text>
+          <ActionIcon variant={"transparent"} onClick={() => setOpened(false)}>
+            <Image src={CloseIcon}></Image>
+          </ActionIcon>
+        </Group>
+        <Divider my="md" />
         <Checkbox.Group
           label="Product line"
           value={selectedProductLines}
           onChange={onSelectedProductLinesChange}
         >
           {productLines.map((productLine) => (
-            <Checkbox key={productLine} value={productLine} label={productLine} mt={15} />
+            <Checkbox
+              key={productLine}
+              value={productLine}
+              label={productLine}
+              mt={15}
+            />
           ))}
         </Checkbox.Group>
-      </Drawer>
-    </Box>
+      </Popover.Dropdown>
+    </Popover>
   );
 }
