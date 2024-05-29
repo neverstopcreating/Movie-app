@@ -27,7 +27,7 @@ export function AppHeader() {
       <Group>
         <Image src={LogoIcon} />
         <Text size="xl" c={"#838691"}>
-          Homework is more fun when its about movies
+          Cinema Reimagined: Where Every Screening is a Spectacle
         </Text>
         <Text style={{ marginLeft: "auto" }} c={grayColor} size="sm" pr={45}>
           Karolina Uskure
