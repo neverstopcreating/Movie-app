@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import { AppShell, Group, Image, MantineProvider, Text } from "@mantine/core";
-import LogoIcon from "@/Assets/Entain-logo.svg";
+import LogoIcon from "@/Assets/Entain.svg";
 import { AppRoutes } from "@/App/AppRoutes.tsx";
 import { grayColor } from "@/util/colors.ts";
 import {Provider} from "react-redux";
@@ -27,7 +27,7 @@ export function AppHeader() {
       <Group>
         <Image src={LogoIcon} />
         <Text size="xl" c={"#838691"}>
-          Movies
+          Homework is more fun when its about movies
         </Text>
         <Text style={{ marginLeft: "auto" }} c={grayColor} size="sm" pr={45}>
           Karolina Uskure
