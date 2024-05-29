@@ -7,7 +7,7 @@ type Props = {
   search: string;
 };
 
-export function DevicesSearch({ onSearch, search }: Props) {
+export function MovieSearch({ onSearch, search }: Props) {
   const clearInput = () => {
     onSearch("");
     search = "";

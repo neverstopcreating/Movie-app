@@ -1,7 +1,8 @@
-import { Movie, useImage } from "@/api/api.ts";
+import { Movie } from "@/api/api.ts";
 import { Box, lighten, Table } from "@mantine/core";
 import { grayColor } from "@/util/colors.ts";
 import { Link } from "react-router-dom";
+import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
 
 interface Props {
   movies: Movie[];
@@ -49,26 +50,17 @@ interface RowProps {
 }
 
 function MovieRow({ movie }: RowProps) {
-    const imageUrl = useImage(movie.id);
   return (
     <Table.Tr key={movie.id}>
       <Table.Td w={140}>
-        <div>
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt={movie.title}
-              style={{ maxWidth: "50px" }}
-            />
-          )}
-        </div>
+        <MovieImage movie={movie} size={50}/>
       </Table.Td>
       <Table.Td w={250} c={grayColor}>
         {movie.release_date}
       </Table.Td>
       <Table.Td c={grayColor}>
         <Link
-          to={`/device/${movie.id}`}
+          to={`/movie/${movie.id}`}
           style={{ color: lighten("#000000", 0.35), textDecoration: "none" }}
         >
           {movie.title}

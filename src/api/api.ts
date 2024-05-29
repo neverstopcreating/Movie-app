@@ -1,24 +1,5 @@
 import { useEffect, useState } from "react";
 
-export interface Device {
-  guids: string[];
-  icon: {
-    id: string;
-    resolutions: [number, number][];
-  };
-  id: string;
-  line: {
-    id: string;
-    name: string;
-  };
-  product: {
-    abbrev: string;
-    name: string;
-  };
-  shortnames: string[];
-  sysids: number[];
-  triplets: string[];
-}
 
 export interface MovieData {
   results: Movie[];
@@ -65,7 +46,6 @@ export async function getMovies(): Promise<Movie[]> {
     `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
   );
   const data = await response.json();
-  console.log("foo-results", data.results);
   return data.results;
 }
 
@@ -110,6 +90,20 @@ export function useMovies(): Movie[] {
   return movies;
 }
 
+export function useMovie(movieId: number) {
+  const [movie, setMovie] = useState<Movie>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const movie = await getMovie(movieId);
+      setMovie(movie);
+    };
+    fetchData();
+  }, [movieId]);
+
+  return movie;
+}
+
 export function useImage(movieId: number) {
   const [movie, setMovie] = useState<Movie[]>([]);
   const [config, setConfig] = useState<Configuration>();
@@ -137,7 +131,7 @@ export function useImage(movieId: number) {
       }
     };
     fetchData();
-  }, [movieId]);
+  }, []);
 
   return imageUrl;
 }

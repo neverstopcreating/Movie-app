@@ -7,6 +7,7 @@ import { Movie, useMovies } from "@/api/api.ts";
 import { MoviesGrid } from "./Views/MoviesGrid.tsx";
 import { Box, Divider, Group } from "@mantine/core";
 import {MovieTable} from "@/App/DeviceList/Views/MovieTable.tsx";
+import {MovieSearch} from "@/App/DeviceList/MovieSearch.tsx";
 
 export function MovieListPage() {
   const movies = useMovies();
@@ -28,7 +29,7 @@ export function MovieListPage() {
   return (
     <Box>
       <Box display={"flex"} style={{ justifyContent: "space-between" }}>
-        {/*<DevicesSearch onSearch={setSearchTerm} search={searchTerm} />*/}
+        <MovieSearch onSearch={setSearchTerm} search={searchTerm} />
         <Group>
           <MoviesViewTypeSwitcher
             viewType={viewType}
