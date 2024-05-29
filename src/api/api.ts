@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export interface MovieData {
   results: Movie[];
   page: number;
-  total_results: number;
+  total_results?: number;
   total_pages: number;
 }
 
@@ -41,12 +41,12 @@ export interface Movie {
 export const API_KEY = "e7b81801e86d21c8de16c4418c18b94e";
 export const BASE_URL = "https://api.themoviedb.org/3";
 
-export async function getMovies(): Promise<Movie[]> {
+export async function getMovies(page: number): Promise<MovieData> {
   const response = await fetch(
-    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`
   );
   const data = await response.json();
-  return data.results;
+  return data;
 }
 
 export async function getMovie(movieId: number) {
@@ -71,23 +71,27 @@ export const getImageUrl = (
 export async function getConfiguration(): Promise<Configuration> {
   const response = await fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`);
   const data = await response.json();
-  console.log("foo-movies", data);
   return data;
 }
 
-export function useMovies(): Movie[] {
+export function useMovies(newPage: number): MovieData {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
-      const movies = await getMovies();
-      setMovies(movies);
+      const movies = await getMovies(newPage);
+      console.log("foo-movies", movies);
+      setMovies(movies.results);
+      setPage(movies.page);
+      setTotalPages(movies.total_pages);
     };
 
     fetchData();
-  }, []);
+  }, [newPage]);
 
-  return movies;
+  return { results: movies, page, total_pages: totalPages}
 }
 
 export function useMovie(movieId: number) {

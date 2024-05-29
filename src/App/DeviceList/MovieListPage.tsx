@@ -5,17 +5,19 @@ import {
 } from "./MoviesViewTypeSwitcher.tsx";
 import { Movie, useMovies } from "@/api/api.ts";
 import { MoviesGrid } from "./Views/MoviesGrid.tsx";
-import { Box, Divider, Group } from "@mantine/core";
+import {Box, Divider, Group} from "@mantine/core";
 import {MovieTable} from "@/App/DeviceList/Views/MovieTable.tsx";
 import {MovieSearch} from "@/App/DeviceList/MovieSearch.tsx";
+import {MoviePagination} from "@/App/DeviceList/Views/MoviePagination.tsx";
 
 export function MovieListPage() {
-  const movies = useMovies();
+  const [currentPage, setCurrentPage] = useState(1);
+  const {results, total_pages} = useMovies(currentPage);
   const [viewType, setViewType] = useState<MoviesViewType>("grid");
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredMovies = useMemo(() => {
-    let filteredMovies = movies;
+    let filteredMovies = results;
 
     if (searchTerm) {
       filteredMovies = filteredMovies.filter((movie) =>
@@ -24,7 +26,11 @@ export function MovieListPage() {
     }
 
     return filteredMovies;
-  }, [movies, searchTerm]);
+  }, [results, searchTerm]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Box>
@@ -39,6 +45,7 @@ export function MovieListPage() {
       </Box>
       <Divider my="md" />
       <MoviesView viewType={viewType} movies={filteredMovies} />
+      <MoviePagination total={total_pages} currentPage={currentPage} onPageChange={handlePageChange} />
     </Box>
   );
 }
