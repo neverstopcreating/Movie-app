@@ -28,19 +28,17 @@ export interface MovieData {
 }
 
 export interface Configuration {
-    images: {
-        base_url: string;
-        secure_base_url: string;
-        backdrop_sizes: string[];
-        logo_sizes: string[];
-        poster_sizes: string[];
-        profile_sizes: string[];
-        still_sizes: string[];
-    };
-    change_keys: string[];
-
+  images: {
+    base_url: string;
+    secure_base_url: string;
+    backdrop_sizes: string[];
+    logo_sizes: string[];
+    poster_sizes: string[];
+    profile_sizes: string[];
+    still_sizes: string[];
+  };
+  change_keys: string[];
 }
-
 
 export interface Movie {
   adult: boolean;
@@ -59,44 +57,43 @@ export interface Movie {
   vote_count: number;
 }
 
-export const API_KEY = 'e7b81801e86d21c8de16c4418c18b94e';
-export const BASE_URL = 'https://api.themoviedb.org/3';
-
-// TODO: handle non-200 (non-ok) status codes
-// TODO: handle possible data format changes (how?)
+export const API_KEY = "e7b81801e86d21c8de16c4418c18b94e";
+export const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function getMovies(): Promise<Movie[]> {
   const response = await fetch(
     `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
   );
   const data = await response.json();
-  console.log('foo-results',data.results);
+  console.log("foo-results", data.results);
   return data.results;
 }
 
 export async function getMovie(movieId: number) {
-  const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+  const response = await fetch(
+    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`,
+  );
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw new Error("Network response was not ok");
   }
   return response.json();
 }
 
-export const getImageUrl = (config: Configuration, filePath: string, size: string = 'original') => {
+export const getImageUrl = (
+  config: Configuration,
+  filePath: string,
+  size: string = "original",
+) => {
   const baseUrl = config.images.secure_base_url;
   return `${baseUrl}${size}${filePath}`;
 };
 
 export async function getConfiguration(): Promise<Configuration> {
-  const response = await fetch(
-    `${BASE_URL}/configuration?api_key=${API_KEY}`,
-  );
+  const response = await fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`);
   const data = await response.json();
-  console.log('foo-movies',data);
+  console.log("foo-movies", data);
   return data;
 }
-
-
 
 export function useMovies(): Movie[] {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -113,7 +110,6 @@ export function useMovies(): Movie[] {
   return movies;
 }
 
-
 export function useImage(movieId: number) {
   const [movie, setMovie] = useState<Movie[]>([]);
   const [config, setConfig] = useState<Configuration>();
@@ -129,13 +125,17 @@ export function useImage(movieId: number) {
         setMovie(movieData);
 
         if (configData && movieData.poster_path) {
-          const imageUrl = getImageUrl(configData, movieData.poster_path, 'w500');
+          const imageUrl = getImageUrl(
+            configData,
+            movieData.poster_path,
+            "w500",
+          );
           setImageUrl(imageUrl);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
-    }
+    };
     fetchData();
   }, [movieId]);
 

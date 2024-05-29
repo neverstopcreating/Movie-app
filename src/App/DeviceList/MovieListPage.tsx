@@ -3,26 +3,18 @@ import {
   MoviesViewType,
   MoviesViewTypeSwitcher,
 } from "./MoviesViewTypeSwitcher.tsx";
-import {Movie, useImage, useMovies} from "@/api/api.ts";
+import { Movie, useMovies } from "@/api/api.ts";
 import { MoviesGrid } from "./Views/MoviesGrid.tsx";
 import { Box, Divider, Group } from "@mantine/core";
+import {MovieTable} from "@/App/DeviceList/Views/MovieTable.tsx";
 
 export function MovieListPage() {
   const movies = useMovies();
   const [viewType, setViewType] = useState<MoviesViewType>("grid");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedProductLines, setSelectedProductLines] = useState<string[]>(
-    [],
-  );
 
   const filteredMovies = useMemo(() => {
     let filteredMovies = movies;
-
-    if (selectedProductLines.length > 0) {
-      filteredMovies = filteredMovies.filter((movie) =>
-        selectedProductLines.includes(movie.title),
-      );
-    }
 
     if (searchTerm) {
       filteredMovies = filteredMovies.filter((movie) =>
@@ -31,7 +23,7 @@ export function MovieListPage() {
     }
 
     return filteredMovies;
-  }, [movies, searchTerm, selectedProductLines]);
+  }, [movies, searchTerm]);
 
   return (
     <Box>
@@ -42,11 +34,6 @@ export function MovieListPage() {
             viewType={viewType}
             onViewChange={setViewType}
           />
-          {/*<DevicesFilter*/}
-          {/*  selectedProductLines={selectedProductLines}*/}
-          {/*  onSelectedProductLinesChange={setSelectedProductLines}*/}
-          {/*  devices={devices}*/}
-          {/*/>*/}
         </Group>
       </Box>
       <Divider my="md" />
@@ -65,6 +52,6 @@ export function MoviesView({ viewType, movies }: MoviesViewProps) {
     case "grid":
       return <MoviesGrid movies={movies} />;
     case "table":
-      // return <DevicesTable devices={devices} />;
+      return <MovieTable movies={movies} />;
   }
 }
