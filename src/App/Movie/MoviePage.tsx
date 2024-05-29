@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { Box, Divider, Group, Image, Text } from "@mantine/core";
 import { grayColor, lighterGrayColor } from "@/util/colors.ts";
 import BackIcon from "@/Assets/Back-icon.svg";
-import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
+import { MovieImage } from "@/App/MovieList/MovieImage.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store.ts";
 import { getImageUrl } from "@/api/api.ts";

@@ -6,9 +6,9 @@ import {
 import {Configuration, getImageUrl, Movie} from "@/api/api.ts";
 import { MoviesGrid } from "./Views/MoviesGrid.tsx";
 import { Box, Divider, Group } from "@mantine/core";
-import { MovieTable } from "@/App/DeviceList/Views/MovieTable.tsx";
-import { MovieSearch } from "@/App/DeviceList/MovieSearch.tsx";
-import { MoviePagination } from "@/App/DeviceList/MoviePagination.tsx";
+import { MovieTable } from "@/App/MovieList/Views/MovieTable.tsx";
+import { MovieSearch } from "@/App/MovieList/MovieSearch.tsx";
+import { MoviePagination } from "@/App/MovieList/MoviePagination.tsx";
 import { AppDispatch, RootState } from "@/store/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import {

@@ -2,7 +2,7 @@ import { Movie } from "@/api/api.ts";
 import { Box, lighten, Table } from "@mantine/core";
 import { grayColor } from "@/util/colors.ts";
 import { Link } from "react-router-dom";
-import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
+import { MovieImage } from "@/App/MovieList/MovieImage.tsx";
 
 interface Props {
   movies: (Movie & { imageUrl: string })[];

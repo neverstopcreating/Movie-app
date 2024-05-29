@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MovieListPage } from "@/App/DeviceList/MovieListPage.tsx";
+import { MovieListPage } from "@/App/MovieList/MovieListPage.tsx";
 import { MoviePage } from "@/App/Movie/MoviePage.tsx";
 
 export function AppRoutes() {

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getMovie, getMovies, Movie } from "@/api/api.ts";
-import { MoviesViewType } from "@/App/DeviceList/MoviesViewTypeSwitcher.tsx";
+import { MoviesViewType } from "@/App/MovieList/MoviesViewTypeSwitcher.tsx";
 
 interface MoviesState {
   currentPage: number;
