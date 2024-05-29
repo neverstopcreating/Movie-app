@@ -1,17 +1,34 @@
-import {Link, Params, useParams} from "react-router-dom";
-import { useMovie } from "@/api/api.ts";
+import { Link, useParams } from "react-router-dom";
 import { Box, Divider, Group, Image, Text } from "@mantine/core";
 import { grayColor, lighterGrayColor } from "@/util/colors.ts";
 import BackIcon from "@/Assets/Back-icon.svg";
 import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store.ts";
+import { getImageUrl } from "@/api/api.ts";
+import { fetchMovie } from "@/slices/moviesSlice.ts";
+import { useEffect } from "react";
+import {fetchConfig} from "@/slices/configSlice.ts";
 
 export function MoviePage() {
-  const { id } = useParams<Params>();
-  const movie = useMovie(Number(id));
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+  const movie = useSelector((state: RootState) => state.movies.movie);
+  const config = useSelector((state: RootState) => state.config.config);
+  console.log("moviePage movie:", movie,config);
 
-  if (movie == null) {
-    return <div></div>;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchMovie(Number(id)));
+      dispatch(fetchConfig())
+    }
+  }, [dispatch, id]);
+
+  if ( !movie || !config) {
+    return <div>Loading...</div>;
   }
+
+  const imageUrl = getImageUrl(config, movie.poster_path, "w400");
 
   return (
     <Box>
@@ -31,7 +48,7 @@ export function MoviePage() {
         }}
       >
         <Group>
-          <MovieImage movie={movie} size={400} />
+          <MovieImage imageUrl={imageUrl} title={movie.title} />
           <Box w={400} c={grayColor}>
             <Box display={"flex"} style={{ justifyContent: "space-between" }}>
               <Text>Movie Title</Text>

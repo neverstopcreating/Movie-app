@@ -5,19 +5,18 @@ import { lighterGrayColor } from "@/util/colors.ts";
 import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
 
 interface Props {
-  movies: Movie[];
+    movies: (Movie & { imageUrl: string })[];
 }
 
-export function MoviesGrid(movies: Props) {
-  console.log("foo", movies);
+export function MoviesGrid({ movies }: Props) {
 
   return (
     <Box>
       <Text c={"#bdbdbd"} size="xs">
-        {movies.movies.length} movies
+        {movies.length} movies
       </Text>
       <Grid>
-        {movies.movies.map((movie: Movie) => (
+        {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </Grid>
@@ -26,7 +25,7 @@ export function MoviesGrid(movies: Props) {
 }
 
 interface CardProps {
-  movie: Movie;
+    movie: Movie & { imageUrl: string };
 }
 
 function MovieCard({ movie }: CardProps) {
@@ -34,7 +33,7 @@ function MovieCard({ movie }: CardProps) {
     <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 2 }}>
       <Card padding="lg" mt={15} radius="md" withBorder>
         <Card.Section ta="center" bg={"#f6f6f8"}>
-          <MovieImage movie={movie} size={200} />
+          <MovieImage  imageUrl={movie.imageUrl} title={movie.title} />
         </Card.Section>
         <Link
           to={`/movie/${movie.id}`}

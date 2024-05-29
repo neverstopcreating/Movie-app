@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
 
 interface Props {
-  movies: Movie[];
+  movies: (Movie & { imageUrl: string })[];
 }
 
-export function MovieTable(movies: Props) {
+export function MovieTable({ movies }: Props) {
   return (
     <Box>
       <Table>
         <Table.Thead>
           <Table.Tr>
             <Table.Th miw={140} c={"#bdbdbd"} fw={400}>
-              {movies.movies.length} movies
+              {movies.length} movies
             </Table.Th>
             <Table.Th
               w={250}
@@ -36,7 +36,7 @@ export function MovieTable(movies: Props) {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {movies.movies.map((movie) => (
+          {movies.map((movie) => (
             <MovieRow key={movie.title} movie={movie} />
           ))}
         </Table.Tbody>
@@ -46,14 +46,14 @@ export function MovieTable(movies: Props) {
 }
 
 interface RowProps {
-  movie: Movie;
+  movie: Movie & { imageUrl: string };
 }
 
 function MovieRow({ movie }: RowProps) {
   return (
     <Table.Tr key={movie.id}>
-      <Table.Td w={140}>
-        <MovieImage movie={movie} size={50}/>
+      <Table.Td w={140} >
+        <MovieImage  imageUrl={movie.imageUrl} title={movie.title}/>
       </Table.Td>
       <Table.Td w={250} c={grayColor}>
         {movie.release_date}

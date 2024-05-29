@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-
-
 export interface MovieData {
   results: Movie[];
   page: number;
@@ -43,13 +40,15 @@ export const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function getMovies(page: number): Promise<MovieData> {
   const response = await fetch(
-    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`
+    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`,
   );
-  const data = await response.json();
-  return data;
+  if (!response.ok) {
+    throw new Error("Failed to fetch movies");
+  }
+  return response.json();
 }
 
-export async function getMovie(movieId: number) {
+export async function getMovie(movieId: number): Promise<Movie> {
   const response = await fetch(
     `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`,
   );
@@ -62,7 +61,7 @@ export async function getMovie(movieId: number) {
 export const getImageUrl = (
   config: Configuration,
   filePath: string,
-  size: string = "original",
+  size: string,
 ) => {
   const baseUrl = config.images.secure_base_url;
   return `${baseUrl}${size}${filePath}`;
@@ -70,72 +69,8 @@ export const getImageUrl = (
 
 export async function getConfiguration(): Promise<Configuration> {
   const response = await fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`);
-  const data = await response.json();
-  return data;
-}
-
-export function useMovies(newPage: number): MovieData {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const movies = await getMovies(newPage);
-      console.log("foo-movies", movies);
-      setMovies(movies.results);
-      setPage(movies.page);
-      setTotalPages(movies.total_pages);
-    };
-
-    fetchData();
-  }, [newPage]);
-
-  return { results: movies, page, total_pages: totalPages}
-}
-
-export function useMovie(movieId: number) {
-  const [movie, setMovie] = useState<Movie>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const movie = await getMovie(movieId);
-      setMovie(movie);
-    };
-    fetchData();
-  }, [movieId]);
-
-  return movie;
-}
-
-export function useImage(movieId: number) {
-  const [movie, setMovie] = useState<Movie[]>([]);
-  const [config, setConfig] = useState<Configuration>();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const configData = await getConfiguration();
-        setConfig(configData);
-
-        const movieData = await getMovie(movieId);
-        setMovie(movieData);
-
-        if (configData && movieData.poster_path) {
-          const imageUrl = getImageUrl(
-            configData,
-            movieData.poster_path,
-            "w500",
-          );
-          setImageUrl(imageUrl);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return imageUrl;
+  if (!response.ok) {
+    throw new Error("Failed to fetch configuration");
+  }
+  return response.json();
 }
