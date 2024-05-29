@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import { AppShell, Group, Image, MantineProvider, Text } from "@mantine/core";
-import LogoIcon from "@/Assets/Logo.svg";
+import LogoIcon from "@/Assets/Entain-logo.svg";
 import { AppRoutes } from "@/App/AppRoutes.tsx";
 import { grayColor } from "@/util/colors.ts";
 
@@ -23,7 +23,7 @@ export function AppHeader() {
       <Group>
         <Image src={LogoIcon} />
         <Text size="xl" c={"#838691"}>
-          Devices
+          Movies
         </Text>
         <Text style={{ marginLeft: "auto" }} c={grayColor} size="sm" pr={45}>
           Karolina Uskure

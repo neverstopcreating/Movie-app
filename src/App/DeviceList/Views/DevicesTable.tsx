@@ -1,5 +1,5 @@
 import { Device } from "@/api/api.ts";
-import { DeviceImage } from "@/App/DeviceList/DeviceImage.tsx";
+import { MovieImage } from "@/App/DeviceList/MovieImage.tsx";
 import { Box, lighten, Table } from "@mantine/core";
 import { grayColor } from "@/util/colors.ts";
 import { Link } from "react-router-dom";
@@ -47,7 +47,7 @@ function DeviceRow({ device }: RowProps) {
   return (
     <Table.Tr key={device.id}>
       <Table.Td w={140}>
-        <DeviceImage device={device} size="sm" />
+        <MovieImage device={device} size="sm" />
       </Table.Td>
       <Table.Td w={250} c={grayColor}>
         {device.line.name}

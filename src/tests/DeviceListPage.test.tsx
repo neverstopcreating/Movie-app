@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import {DeviceListPage} from "@/App/DeviceList/DeviceListPage.tsx";
+import {MovieListPage} from "@/App/DeviceList/MovieListPage.tsx";
 
 vi.mock("@/api/api.ts", () => ({
     useDevices: vi.fn(() => []),
@@ -29,7 +29,7 @@ vi.mock("@/App/DeviceList/DevicesSearch.tsx", () => ({
 
 describe('DeviceListPage', () => {
     it('renders the grid view by default', () => {
-        render(<DeviceListPage />);
+        render(<MovieListPage />);
         expect(screen.getByText('DevicesGrid')).toBeInTheDocument();
     });
 });

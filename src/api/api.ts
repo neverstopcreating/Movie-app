@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
 
-export interface DevicesData {
-  devices: Device[];
-  version: string;
-}
-
 export interface Device {
   guids: string[];
   icon: {
@@ -25,27 +20,124 @@ export interface Device {
   triplets: string[];
 }
 
-// TODO: handle non-200 (non-ok) status codes
-// TODO: handle possible data format changes (how?)
-export async function getDevices(): Promise<Device[]> {
-  const response = await fetch(
-    "https://static.ui.com/fingerprint/ui/public.json",
-  );
-  const data: DevicesData = await response.json();
-  return data.devices;
+export interface MovieData {
+  results: Movie[];
+  page: number;
+  total_results: number;
+  total_pages: number;
 }
 
-export function useDevices(): Device[] {
-  const [devices, setDevices] = useState<Device[]>([]);
+export interface Configuration {
+    images: {
+        base_url: string;
+        secure_base_url: string;
+        backdrop_sizes: string[];
+        logo_sizes: string[];
+        poster_sizes: string[];
+        profile_sizes: string[];
+        still_sizes: string[];
+    };
+    change_keys: string[];
+
+}
+
+
+export interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export const API_KEY = 'e7b81801e86d21c8de16c4418c18b94e';
+export const BASE_URL = 'https://api.themoviedb.org/3';
+
+// TODO: handle non-200 (non-ok) status codes
+// TODO: handle possible data format changes (how?)
+
+export async function getMovies(): Promise<Movie[]> {
+  const response = await fetch(
+    `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+  );
+  const data = await response.json();
+  console.log('foo-results',data.results);
+  return data.results;
+}
+
+export async function getMovie(movieId: number) {
+  const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+}
+
+export const getImageUrl = (config: Configuration, filePath: string, size: string = 'original') => {
+  const baseUrl = config.images.secure_base_url;
+  return `${baseUrl}${size}${filePath}`;
+};
+
+export async function getConfiguration(): Promise<Configuration> {
+  const response = await fetch(
+    `${BASE_URL}/configuration?api_key=${API_KEY}`,
+  );
+  const data = await response.json();
+  console.log('foo-movies',data);
+  return data;
+}
+
+
+
+export function useMovies(): Movie[] {
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const devices = await getDevices();
-      setDevices(devices);
+      const movies = await getMovies();
+      setMovies(movies);
     };
 
     fetchData();
   }, []);
 
-  return devices;
+  return movies;
+}
+
+
+export function useImage(movieId: number) {
+  const [movie, setMovie] = useState<Movie[]>([]);
+  const [config, setConfig] = useState<Configuration>();
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const configData = await getConfiguration();
+        setConfig(configData);
+
+        const movieData = await getMovie(movieId);
+        setMovie(movieData);
+
+        if (configData && movieData.poster_path) {
+          const imageUrl = getImageUrl(configData, movieData.poster_path, 'w500');
+          setImageUrl(imageUrl);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }, [movieId]);
+
+  return imageUrl;
 }
