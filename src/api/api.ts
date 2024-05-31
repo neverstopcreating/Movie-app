@@ -72,5 +72,6 @@ export async function getConfiguration(): Promise<Configuration> {
   if (!response.ok) {
     throw new Error("Failed to fetch configuration");
   }
+  console.log('foo get called');
   return response.json();
 }

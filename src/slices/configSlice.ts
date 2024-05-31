@@ -15,7 +15,7 @@ const initialState: ConfigState = {
 
 export const fetchConfig = createAsyncThunk('config/fetchConfig', async () => {
     const response = await getConfiguration();
-    console.log('movie-Configuration:', response);
+    console.log('foo response', response);
     return response;
 });
 

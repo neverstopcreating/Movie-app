@@ -3,12 +3,19 @@ import { AppShell, Group, Image, MantineProvider, Text } from "@mantine/core";
 import LogoIcon from "@/Assets/Entain.svg";
 import { AppRoutes } from "@/App/AppRoutes.tsx";
 import { grayColor } from "@/util/colors.ts";
-import {Provider} from "react-redux";
-import {store} from "@/store/store.ts";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store.ts";
+import { fetchConfig } from "@/slices/configSlice.ts";
+import { useEffect } from "react";
 
 export function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchConfig());
+  }, [dispatch]);
+
   return (
-      <Provider store={store}>
     <MantineProvider>
       <AppShell padding="md">
         <AppHeader />
@@ -17,7 +24,6 @@ export function App() {
         </AppShell.Main>
       </AppShell>
     </MantineProvider>
-      </Provider>
   );
 }
 

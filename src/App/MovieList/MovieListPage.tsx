@@ -23,16 +23,12 @@ export function MovieListPage() {
   const { currentPage, totalPages, movies, searchTerm, viewType } = useSelector(
     (state: RootState) => state.movies,
   );
-  const { config } = useSelector((state: RootState) => state.config);
+  const config = useSelector((state: RootState) => state.config.config);
+  console.log('foo',config)
 
   useEffect(() => {
-    console.log("Dispatching fetchMovies thunk");
     dispatch(fetchMovies(currentPage));
   }, [dispatch, currentPage]);
-
-  useEffect(() => {
-    console.log("Movies state:", movies); // Log the movies state
-  }, [movies]);
 
   const filteredMovies = useMemo(() => {
     let filteredMovies = movies;
@@ -44,7 +40,7 @@ export function MovieListPage() {
     }
 
     return filteredMovies;
-  }, [movies, searchTerm]);
+  }, [movies, searchTerm, config]);
 
   const handlePageChange = (page: number) => {
     dispatch(setCurrentPage(page));

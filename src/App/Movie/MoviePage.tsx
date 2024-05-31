@@ -15,7 +15,6 @@ export function MoviePage() {
   const dispatch = useDispatch<AppDispatch>();
   const movie = useSelector((state: RootState) => state.movies.movie);
   const config = useSelector((state: RootState) => state.config.config);
-  console.log("moviePage movie:", movie,config);
 
   useEffect(() => {
     if (id) {

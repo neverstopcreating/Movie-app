@@ -30,7 +30,7 @@ interface CardProps {
 
 function MovieCard({ movie }: CardProps) {
   return (
-    <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 2 }}>
+    <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 2.40 }}>
       <Card padding="lg" mt={15} radius="md" withBorder>
         <Card.Section ta="center" bg={"#f6f6f8"}>
           <MovieImage  imageUrl={movie.imageUrl} title={movie.title} />
