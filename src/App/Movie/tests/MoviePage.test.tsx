@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import { render } from "@/testUtils.tsx";
+import { render } from "@/testing-setup/testUtils.tsx";
 import { MoviePage } from "@/App/Movie/MoviePage.tsx";
 
 describe("MoviePage", () => {

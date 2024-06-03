@@ -1,6 +1,6 @@
 import { ActionIcon, Image, TextInput } from "@mantine/core";
-import CloseIcon from "@/Assets/Close-icon.svg";
-import SearchIcon from "@/Assets/Search-icon.svg";
+import CloseIcon from "@/assets/Close-icon.svg";
+import SearchIcon from "@/assets/Search-icon.svg";
 
 type Props = {
   onSearch: (term: string) => void;

@@ -2,7 +2,7 @@ import { Movie } from "@/api/api.ts";
 import { Box, Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { MovieImage } from "@/App/MovieList/MovieImage.tsx";
-import styles from "@/util/styles.module.scss";
+import styles from "@/App/styles/styles.module.scss";
 
 interface Props {
   movies: (Movie & { imageUrl: string })[];

@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom";
-import { server } from '@/mocks/node';
+import { server } from '@/testing-setup/mocks/node.ts';
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())

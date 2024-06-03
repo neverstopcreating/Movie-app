@@ -1,12 +1,12 @@
 import "@mantine/core/styles.css";
 import { AppShell, Group, Image, MantineProvider, Text } from "@mantine/core";
-import LogoIcon from "@/Assets/Entain.svg";
+import LogoIcon from "@/assets/Entain.svg";
 import { AppRoutes } from "@/App/AppRoutes.tsx";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store.ts";
 import { fetchConfig } from "@/slices/configSlice.ts";
 import { useEffect } from "react";
-import styles from "@/util/styles.module.scss";
+import styles from "@/App/styles/styles.module.scss";
 
 export function App() {
   const dispatch = useDispatch<AppDispatch>();

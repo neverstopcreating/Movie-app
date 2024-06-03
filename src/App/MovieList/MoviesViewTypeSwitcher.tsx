@@ -1,8 +1,8 @@
 import { ActionIcon, Box, Image } from "@mantine/core";
-import GridActiveIcon from "@/Assets/GridActive.svg";
-import GridDefaultIcon from "@/Assets/GridDefault.svg";
-import ListActiveIcon from "@/Assets/ListActive.svg";
-import ListDefaultIcon from "@/Assets/ListDefault.svg";
+import GridActiveIcon from "@/assets/GridActive.svg";
+import GridDefaultIcon from "@/assets/GridDefault.svg";
+import ListActiveIcon from "@/assets/ListActive.svg";
+import ListDefaultIcon from "@/assets/ListDefault.svg";
 
 export type MoviesViewType = "grid" | "table";
 

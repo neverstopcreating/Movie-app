@@ -58,10 +58,16 @@ export async function getMovie(movieId: number): Promise<Movie> {
   return response.json();
 }
 
-export async function getSearchedMovie(query: string): Promise<MovieData> {
+export async function getSearchedMovie(
+  query: string,
+  page: number,
+): Promise<MovieData> {
   const response = await fetch(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=true`,
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=true&page=${page}`,
   );
+  if (!response.ok) {
+    throw new Error("Network response for search was not ok");
+  }
   return response.json();
 }
 

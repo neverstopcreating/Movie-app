@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { MovieListPage } from "@/App/MovieList/MovieListPage.tsx";
-import { render } from "@/testUtils.tsx";
+import { render } from "@/testing-setup/testUtils.tsx";
 
 describe("MovieListPage", () => {
   test("renders MovieListPage component", () => {

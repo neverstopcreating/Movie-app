@@ -28,7 +28,7 @@ export function MovieListPage() {
 
   useEffect(() => {
     if (searchTerm) {
-      dispatch(fetchSearchedMovies(searchTerm));
+      dispatch(fetchSearchedMovies({ query: searchTerm, page: currentPage }));
     } else {
       dispatch(fetchMovies(currentPage));
     }
@@ -55,7 +55,7 @@ export function MovieListPage() {
       <Divider my="md" />
       <MoviesView viewType={viewType} movies={filteredMovies} config={config} />
       <MoviePagination
-          //even though total amount of pages can be 4k+, it allows to show only 500 pages
+        //even though total amount of pages can be 4k+, it allows to show only 500 pages
         total={totalPages > 500 ? 500 : totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}

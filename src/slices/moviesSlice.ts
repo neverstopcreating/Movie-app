@@ -7,7 +7,6 @@ interface MoviesState {
   totalPages: number;
   movies: Movie[];
   filteredMovies: Movie[];
-  previousMovies: Movie[];
   movie: Movie | null;
   searchTerm: string;
   viewType: MoviesViewType;
@@ -18,7 +17,6 @@ const initialState: MoviesState = {
   totalPages: 0,
   movies: [],
   filteredMovies: [],
-  previousMovies: [],
   movie: null,
   searchTerm: "",
   viewType: "grid",
@@ -46,10 +44,18 @@ export const fetchMovies = createAsyncThunk(
 
 export const fetchSearchedMovies = createAsyncThunk(
   "movies/fetchSearchedMovies",
-  async (query: string) => {
-    const response = await getSearchedMovie(query);
+  async ({ query, page }: { query: string; page: number }) => {
+    let moviesToShow: Movie[] = [];
+    const actualPage = Math.ceil(page / 2);
+    const response = await getSearchedMovie(query, actualPage);
+
+    const moviesFirstHalf = response.results.slice(0, 10);
+    const moviesSecondHalf = response.results.slice(10, 20);
+
+    moviesToShow = page % 2 === 1 ? moviesFirstHalf : moviesSecondHalf;
     return {
-      ...response,
+      results: moviesToShow,
+      total_pages: response.total_pages * 2,
     };
   },
 );
@@ -71,9 +77,7 @@ const moviesSlice = createSlice({
     },
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
-      if (action.payload === "") {
-        state.filteredMovies = state.movies;
-      }
+      state.currentPage = 1;
     },
     setViewType: (state, action: PayloadAction<MoviesViewType>) => {
       state.viewType = action.payload;
@@ -83,9 +87,6 @@ const moviesSlice = createSlice({
     builder.addCase(fetchMovies.fulfilled, (state, action) => {
       state.filteredMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
-      if (!state.searchTerm) {
-        state.filteredMovies = action.payload.results;
-      }
     });
     builder.addCase(fetchSearchedMovies.fulfilled, (state, action) => {
       state.filteredMovies = action.payload.results;
