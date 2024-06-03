@@ -1,8 +1,8 @@
 import { Movie } from "@/api/api.ts";
-import { Box, lighten, Table } from "@mantine/core";
-import { grayColor } from "@/util/colors.ts";
+import { Box, Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { MovieImage } from "@/App/MovieList/MovieImage.tsx";
+import styles from "@/util/styles.module.scss";
 
 interface Props {
   movies: (Movie & { imageUrl: string })[];
@@ -14,23 +14,19 @@ export function MovieTable({ movies }: Props) {
       <Table>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th miw={140} c={"#bdbdbd"} fw={400}>
+            <Table.Th className={styles["movie-table-header-count"]}>
               {movies.length} movies
             </Table.Th>
-            <Table.Th
-              w={250}
-              c={grayColor}
-              style={{ textTransform: "uppercase" }}
-            >
+            <Table.Th className={styles["movie-table-header-release-date"]}>
               release date
             </Table.Th>
-            <Table.Th c={grayColor} style={{ textTransform: "uppercase" }}>
+            <Table.Th className={styles["movie-table-header-title"]}>
               title
             </Table.Th>
-              <Table.Th c={grayColor} style={{ textTransform: "uppercase" }}>
+            <Table.Th className={styles["movie-table-header-language"]}>
               language
             </Table.Th>
-              <Table.Th c={grayColor} style={{ textTransform: "uppercase" }}>
+            <Table.Th className={styles["movie-table-header-popularity"]}>
               popularity
             </Table.Th>
           </Table.Tr>
@@ -52,26 +48,21 @@ interface RowProps {
 function MovieRow({ movie }: RowProps) {
   return (
     <Table.Tr key={movie.id}>
-      <Table.Td w={140} >
-        <MovieImage  imageUrl={movie.imageUrl} title={movie.title}/>
+      <Table.Td className={styles["movie-row-cell-image"]}>
+        <MovieImage imageUrl={movie.imageUrl} title={movie.title} />
       </Table.Td>
-      <Table.Td w={250} c={grayColor}>
+      <Table.Td className={styles["movie-row-cell-date"]}>
         {movie.release_date}
       </Table.Td>
-      <Table.Td c={grayColor}>
-        <Link
-          to={`/movie/${movie.id}`}
-          style={{ color: lighten("#000000", 0.35), textDecoration: "none" }}
-        >
-          {movie.title}
-        </Link>
+      <Table.Td className={styles["movie-row-cell-title"]}>
+        <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
       </Table.Td>
-        <Table.Td w={250} c={grayColor} style={{ textTransform: "uppercase" }}>
-            {movie.original_language}
-        </Table.Td>
-        <Table.Td w={250} c={grayColor}>
-            {movie.popularity.toFixed(1)}
-        </Table.Td>
+      <Table.Td className={styles["movie-row-cell-language"]}>
+        {movie.original_language}
+      </Table.Td>
+      <Table.Td className={styles["movie-row-cell-popularity"]}>
+        {movie.popularity.toFixed(1)}
+      </Table.Td>
     </Table.Tr>
   );
 }

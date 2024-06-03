@@ -1,0 +1,100 @@
+$base-color: #000000;
+$lighten-color: lighten($base-color, 35%);
+$lighter-gray-color: #a3a3a3;
+$gray-color: #808080;
+$bg-color: #f6f6f8;
+$text-color: #838691;
+
+.movie-card {
+  padding: 1rem;
+  margin-top: 15px;
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+
+  &-section {
+    text-align: center;
+    background-color: #f6f6f8;
+  }
+
+  &-link {
+    color: $lighten-color;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-text {
+    font-size: 0.875rem;
+    color: $lighter-gray-color;
+  }
+}
+
+.movie-table {
+  &-header {
+    &-count {
+      min-width: 140px;
+      color: #bdbdbd;
+      font-weight: 400;
+    }
+
+    &-release-date,
+    &-title,
+    &-language,
+    &-popularity {
+      width: 250px;
+      color: $gray-color;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.movie-row {
+  &-cell {
+    &-image {
+      width: 140px;
+    }
+
+    &-date,
+    &-language,
+    &-popularity {
+      width: 250px;
+      color: $gray-color;
+    }
+
+    &-title {
+      color: $gray-color;
+
+      a {
+        color: $lighten-color;
+        text-decoration: none;
+      }
+    }
+
+    &-language {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.header {
+  background-color: $bg-color;
+
+  .group {
+    display: flex;
+    align-items: center;
+
+    .title {
+      font-size: 1.25rem;
+      color: $text-color;
+    }
+
+    .user {
+      margin-left: auto;
+      color: $gray-color;
+      font-size: 0.875rem;
+      padding-right: 45px;
+    }
+  }
+}
+

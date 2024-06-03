@@ -1,11 +1,11 @@
 import { Movie } from "@/api/api.ts";
-import { Box, Card, Grid, lighten, Text } from "@mantine/core";
+import { Box, Card, Grid, Text } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { lighterGrayColor } from "@/util/colors.ts";
 import { MovieImage } from "@/App/MovieList/MovieImage.tsx";
+import styles from "@/util/styles.module.scss";
 
 interface Props {
-    movies: (Movie & { imageUrl: string })[];
+  movies: (Movie & { imageUrl: string })[];
 }
 
 export function MoviesGrid({ movies }: Props) {
@@ -31,23 +31,17 @@ interface CardProps {
 function MovieCard({ movie }: CardProps) {
   return (
     <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 2.40 }}>
-      <Card padding="lg" mt={15} radius="md" withBorder>
-        <Card.Section ta="center" bg={"#f6f6f8"}>
+      <Card className={styles['movie-card']} withBorder>
+        <Card.Section className={styles['movie-card-section']}>
           <MovieImage imageUrl={movie.imageUrl} title={movie.title} />
         </Card.Section>
         <Link
           to={`/movie/${movie.id}`}
-          style={{
-            color: lighten("#000000", 0.35),
-            textDecoration: "none",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
+          className={styles['movie-card-link']}
         >
           {movie.title}
         </Link>
-        <Text size="sm" c={lighterGrayColor}>
+        <Text className={styles['movie-card-text']}>
           {movie.release_date}
         </Text>
       </Card>
