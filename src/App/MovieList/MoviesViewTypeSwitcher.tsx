@@ -14,10 +14,10 @@ export interface Props {
 export function MoviesViewTypeSwitcher({ viewType, onViewChange }: Props) {
   return (
     <Box>
-      <ActionIcon variant="subtle" onClick={() => onViewChange("table")}>
+      <ActionIcon variant="subtle" onClick={() => onViewChange("table")} aria-label="table view">
         <Image src={viewType === "table" ? ListActiveIcon : ListDefaultIcon} />
       </ActionIcon>
-      <ActionIcon variant="subtle" onClick={() => onViewChange("grid")}>
+      <ActionIcon variant="subtle" onClick={() => onViewChange("grid")} aria-label="grid view">
         <Image src={viewType === "grid" ? GridActiveIcon : GridDefaultIcon} />
       </ActionIcon>
     </Box>

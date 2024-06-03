@@ -27,7 +27,7 @@ export function MoviePage() {
     return <div>Loading...</div>;
   }
 
-  const imageUrl = getImageUrl(config, movie.poster_path, "w400");
+  const imageUrl = getImageUrl(config, movie.poster_path, "w342");
 
   return (
     <Box>
@@ -76,7 +76,7 @@ export function MoviePage() {
             <Divider my="md" />
             <Box display={"flex"} style={{ justifyContent: "space-between" }}>
               <Text>Vote Average</Text>
-              <Text>{movie.vote_average}</Text>
+              <Text>{movie.vote_average.toFixed(1)}</Text>
             </Box>
           </Box>
         </Group>

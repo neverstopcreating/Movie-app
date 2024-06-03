@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import {
   MoviesViewType,
   MoviesViewTypeSwitcher,
 } from "./MoviesViewTypeSwitcher.tsx";
-import {Configuration, getImageUrl, Movie} from "@/api/api.ts";
+import { Configuration, getImageUrl, Movie } from "@/api/api.ts";
 import { MoviesGrid } from "./Views/MoviesGrid.tsx";
 import { Box, Divider, Group } from "@mantine/core";
 import { MovieTable } from "@/App/MovieList/Views/MovieTable.tsx";
@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "@/store/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMovies,
+  fetchSearchedMovies,
   setCurrentPage,
   setSearchTerm,
   setViewType,
@@ -20,31 +21,30 @@ import {
 
 export function MovieListPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentPage, totalPages, movies, searchTerm, viewType } = useSelector(
-    (state: RootState) => state.movies,
-  );
+  const { currentPage, totalPages, filteredMovies, searchTerm, viewType } =
+    useSelector((state: RootState) => state.movies);
+
   const config = useSelector((state: RootState) => state.config.config);
-  console.log('foo',config)
 
   useEffect(() => {
-    dispatch(fetchMovies(currentPage));
-  }, [dispatch, currentPage]);
-
-  const filteredMovies = useMemo(() => {
-    let filteredMovies = movies;
-
     if (searchTerm) {
-      filteredMovies = filteredMovies.filter((movie: Movie) =>
-        movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
+      dispatch(fetchSearchedMovies(searchTerm));
+    } else {
+      dispatch(fetchMovies(currentPage));
     }
-
-    return filteredMovies;
-  }, [movies, searchTerm, config]);
+  }, [dispatch, searchTerm, currentPage]);
 
   const handlePageChange = (page: number) => {
     dispatch(setCurrentPage(page));
   };
+
+  //
+  // let moviesToShow = [];
+  // if (currentPage % 2 === 1) {
+  //   moviesToShow = movies.slice(0, 10);
+  // } else {
+  //   moviesToShow = movies.slice(10);
+  // }
 
   return (
     <Box>
@@ -61,9 +61,10 @@ export function MovieListPage() {
         </Group>
       </Box>
       <Divider my="md" />
-      <MoviesView viewType={viewType} movies={filteredMovies} config={config}/>
+      <MoviesView viewType={viewType} movies={filteredMovies} config={config} />
       <MoviePagination
-        total={totalPages}
+          //even though total amount of pages can be 4k+, it allows to show only 500 pages
+        total={totalPages > 500 ? 500 : totalPages}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
@@ -78,12 +79,27 @@ interface MoviesViewProps {
 }
 
 export function MoviesView({ viewType, movies, config }: MoviesViewProps) {
-  const getImage = (path: string,size:string) => config ? getImageUrl(config, path, size) : '';
+  const getImage = (path: string, size: string) =>
+    config ? getImageUrl(config, path, size) : "";
   switch (viewType) {
     case "grid":
-      return <MoviesGrid movies={movies.map(movie => ({ ...movie, imageUrl: getImage(movie.poster_path,'w200') }))} />;
+      return (
+        <MoviesGrid
+          movies={movies.map((movie) => ({
+            ...movie,
+            imageUrl: getImage(movie.poster_path, "w185"),
+          }))}
+        />
+      );
     case "table":
-      return <MovieTable movies={movies.map(movie => ({ ...movie, imageUrl: getImage(movie.poster_path, 'w200') }))} />;
+      return (
+        <MovieTable
+          movies={movies.map((movie) => ({
+            ...movie,
+            imageUrl: getImage(movie.poster_path, "w92"),
+          }))}
+        />
+      );
     default:
       return null;
   }

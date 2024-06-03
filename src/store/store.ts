@@ -1,13 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import moviesReducer from '../slices/moviesSlice.ts';
 import configReducer from '../slices/configSlice.ts';
 
-export const store = configureStore({
-    reducer: {
-        movies: moviesReducer,
-        config: configReducer,
-    },
-});
+const rootReducer = combineReducers({
+    movies: moviesReducer,
+    config: configReducer,
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export function setupStore(preloadedState?: Partial<RootState>) {
+    return configureStore({
+        reducer: rootReducer,
+        preloadedState
+    })
+}
+
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

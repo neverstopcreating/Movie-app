@@ -15,7 +15,6 @@ const initialState: ConfigState = {
 
 export const fetchConfig = createAsyncThunk('config/fetchConfig', async () => {
     const response = await getConfiguration();
-    console.log('foo response', response);
     return response;
 });
 

@@ -58,6 +58,13 @@ export async function getMovie(movieId: number): Promise<Movie> {
   return response.json();
 }
 
+export async function getSearchedMovie(query: string): Promise<MovieData> {
+  const response = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=true`,
+  );
+  return response.json();
+}
+
 export const getImageUrl = (
   config: Configuration,
   filePath: string,
@@ -72,6 +79,5 @@ export async function getConfiguration(): Promise<Configuration> {
   if (!response.ok) {
     throw new Error("Failed to fetch configuration");
   }
-  console.log('foo get called');
   return response.json();
 }
