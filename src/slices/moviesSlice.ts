@@ -7,6 +7,7 @@ interface MoviesState {
   totalPages: number;
   movies: Movie[];
   filteredMovies: Movie[];
+  previousMovies: Movie[];
   movie: Movie | null;
   searchTerm: string;
   viewType: MoviesViewType;
@@ -17,26 +18,30 @@ const initialState: MoviesState = {
   totalPages: 0,
   movies: [],
   filteredMovies: [],
+  previousMovies: [],
   movie: null,
   searchTerm: "",
   viewType: "grid",
 };
 
 export const fetchMovies = createAsyncThunk(
-    "movies/fetchMovies",
-    async (page: number) => {
-      const actualPage = Math.ceil(page / 2);
-      const response = await getMovies(actualPage);
+  "movies/fetchMovies",
+  async (page: number) => {
+    //Slicing logic to match task requirment for 10 movies per page as themoviedb API returns 20 movies per page
+    let moviesToShow: Movie[] = [];
+    const actualPage = Math.ceil(page / 2);
+    const response = await getMovies(actualPage);
 
-      // Split the movies into two groups of 10
-      const moviesFirstHalf = response.results.slice(0, 10);
-      const moviesSecondHalf = response.results.slice(10, 20);
+    const moviesFirstHalf = response.results.slice(0, 10);
+    const moviesSecondHalf = response.results.slice(10, 20);
 
-      return {
-        results: page % 2 === 1 ? moviesFirstHalf : moviesSecondHalf,
-        total_pages: response.total_pages * 2, // Double the pages since we split them
-      };
-    }
+    moviesToShow = page % 2 === 1 ? moviesFirstHalf : moviesSecondHalf;
+
+    return {
+      results: moviesToShow,
+      total_pages: response.total_pages * 2,
+    };
+  },
 );
 
 export const fetchSearchedMovies = createAsyncThunk(
