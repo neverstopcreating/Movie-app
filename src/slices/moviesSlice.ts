@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {getMovie, getMovies, getSearchedMovie, Movie} from "@/api/api.ts";
+import { getMovie, getMovies, getSearchedMovie, Movie } from "@/api/api.ts";
 import { MoviesViewType } from "@/App/MovieList/MoviesViewTypeSwitcher.tsx";
 
 interface MoviesState {
@@ -23,14 +23,20 @@ const initialState: MoviesState = {
 };
 
 export const fetchMovies = createAsyncThunk(
-  "movies/fetchMovies",
-  async (page: number) => {
-    const response = await getMovies(page);
+    "movies/fetchMovies",
+    async (page: number) => {
+      const actualPage = Math.ceil(page / 2);
+      const response = await getMovies(actualPage);
 
-    return {
-      ...response,
-    };
-  },
+      // Split the movies into two groups of 10
+      const moviesFirstHalf = response.results.slice(0, 10);
+      const moviesSecondHalf = response.results.slice(10, 20);
+
+      return {
+        results: page % 2 === 1 ? moviesFirstHalf : moviesSecondHalf,
+        total_pages: response.total_pages * 2, // Double the pages since we split them
+      };
+    }
 );
 
 export const fetchSearchedMovies = createAsyncThunk(
@@ -70,7 +76,7 @@ const moviesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.fulfilled, (state, action) => {
-      state.movies = action.payload.results;
+      state.filteredMovies = action.payload.results;
       state.totalPages = action.payload.total_pages;
       if (!state.searchTerm) {
         state.filteredMovies = action.payload.results;

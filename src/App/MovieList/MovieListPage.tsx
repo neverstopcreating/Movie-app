@@ -38,14 +38,6 @@ export function MovieListPage() {
     dispatch(setCurrentPage(page));
   };
 
-  //
-  // let moviesToShow = [];
-  // if (currentPage % 2 === 1) {
-  //   moviesToShow = movies.slice(0, 10);
-  // } else {
-  //   moviesToShow = movies.slice(10);
-  // }
-
   return (
     <Box>
       <Box display={"flex"} style={{ justifyContent: "space-between" }}>
