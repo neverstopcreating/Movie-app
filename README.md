@@ -1,4 +1,4 @@
-# Homework Entain
+# Homework
 
 ## Getting Started
 
